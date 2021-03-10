@@ -18,12 +18,13 @@ exports.getItem = (req, res) => {
   //         res.status(400).send('Invalid request')
   //     }
   dbAuth();
-  db.collection("items") //.where('userId', '==', req.params.userId)
+  db.collection("routes") //.where('userId', '==', req.params.userId)
     .get()
     .then((collection) => {
       const itemList = collection.docs.map((doc) => {
         let item = doc.data();
-        item.id = doc.id;
+        item.id = doc.id
+        console.log(item)
         return item;
       });
       res.status(200).send(itemList);
@@ -36,20 +37,21 @@ exports.postItem = (req, res) => {
   }
   dbAuth();
   const newItem = {
-    name: req.body.name,
-    totalDuration: 0,
-    userid: req.body.userId,
-    logs: [],
-    created: now,
-    updated: now,
+    //name: req.body.name,
+    //totalDuration: 0,
+    //userid: req.body.userId,
+    //logs: [],
+    route: "a",
+    //updated: now,
   };
-  db.collection("items")
+  db.collection("routes")
     .add(newItem)
     .then(() => {
       this.getItem(req, res);
     })
     .catch((err) => res.status(500).send("post failed", err));
 };
+
 exports.patchItem = (req, res) => {
   if (!req.body || !req.body.duration || !req.params.itemId) {
     //|| !req.params.userId
@@ -57,7 +59,7 @@ exports.patchItem = (req, res) => {
   }
   authDB();
   let now = admin.firestore.FieldValue.serverTimestamp();
-  db.collection("items")
+  db.collection("routes")
     .doc(req.params.itemId)
     .update({
       updated: now,
@@ -77,7 +79,7 @@ exports.deleteItem = (req, res) => {
     res.status(400).send("Invalid Request");
   }
   dbAuth();
-  db.collection("items")
+  db.collection("routes")
     .doc(req.params.itemId)
     .delete()
     .then(() => this.getItems(req, res))

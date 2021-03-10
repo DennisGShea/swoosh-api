@@ -9,14 +9,9 @@ const app = express()
 app.use(bodyParser.json())
 app.use(cors())
 
-app.get('/name', getItem)
-app.post('/name', postItem)
+app.get('/route', getItem)
+app.post('/addroute', postItem)
 app.delete('/name/:itemId', deleteItem)
 app.patch('/name/:itemId', patchItem)
 
 exports.app = functions.https.onRequest(app)
-
-
-
-
-
