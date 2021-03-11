@@ -37,10 +37,7 @@ exports.postItem = (req, res) => {
   }
   dbAuth();
   const newItem = {
-    //name: req.body.name,
-    //totalDuration: 0,
-    //userid: req.body.userId,
-    //logs: [],
+   
     route: "a",
     //updated: now,
   };
